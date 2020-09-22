@@ -125,7 +125,7 @@ Para poder ejecutar la transcripción, necesitaremos de usuario para la generaci
 esto le permitirá al usuario realizar una transcripción en streaming (y sólo eso).
 
 3. En security credentials haga click en el boton "create access key".
-4. Copie los valores de access_key y secret_key en el archivo  [transcribe_credentials.js](src/transcribe_credentials.js)
+4. Copie los valores de access_key y secret_key en el archivo  [src/transcribe_credentials.js](src/transcribe_credentials.js)
 
 ![](img/access_key.jpg)
 

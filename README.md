@@ -260,7 +260,7 @@ aws s3 ls --profile default | grep 20200610
 ```
 Nota: `grep 20200610` busca buckets con ese patrón en el nombre, dependerá de la fecha de creación de esos buckets.
 
-Eliminamos esos dos buckets
+Eliminamos ese bucket
 
 ```console
 aws s3 rb --force s3://transcribeviewer-20200610142441-hostingbucket-epsilon

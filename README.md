@@ -158,13 +158,21 @@ A continuación puede ejecutar los siguientes comandos que crearán los recursos
 
 ```console
 amplify hosting add
-yarn install
-amplify publish
 ```
 
 Después de `amplify hosting add` elija `DEV (S3 only with HTTP)` y el nombre del hosting bucket puede ser el propuesto por amplify sin problemas.
 
+
+```console
+yarn install
+```
+
 Nota: yarn podría arrojar unos warnings relacionados a "unmet peer dependency" no se preocupe.
+
+
+```console
+amplify publish
+```
 
 **Después de `amplify publish` elija _`no`_ cuando consulta por la generación del código graphql**
 
@@ -250,7 +258,7 @@ aws cloudformation delete-stack --stack-name chime-intelligent-meeting-backend-e
 ```
 Además, se debe eliminar el bucket para deploy (el nombre de bucket es el que se utilizó en paso I)
 ```console
-aws s3 rb --force  default s3://chime-meeting-deploy-bucket
+aws s3 rb --force s3://chime-meeting-deploy-bucket
 ```
 
 En el proyecto amplify eliminamos los recursos cloud utilizando `amplify delete`

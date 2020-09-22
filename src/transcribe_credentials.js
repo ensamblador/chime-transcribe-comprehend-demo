@@ -1,8 +1,3 @@
-const keys = {
-    "access_key": "AKIA4JJ5LINIGF6K6UT3",
-    "secret_key": "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"
-};
-
 /* TODO
 Para obtener access_key y secret_key debe:
 1. Crear un usuario IAM con sólo acceso programático 
@@ -25,10 +20,10 @@ Para obtener access_key y secret_key debe:
 
 */
 
-/* const keys = {
+const keys = {
     "access_key": "", 
     "secret_key": ""
-}; */
+}; 
 
 function Exceptionkeys (mensaje) {
     this.mensaje = mensaje;

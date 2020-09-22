@@ -53,17 +53,20 @@ La aplicación de visualización también se encuentra hosteada en un bucket y a
 
 La implementación ha sido dividida en 2 partes. Vamos paso a paso en cada una de ellas, con la idea de ir entendiendo lo que ocurre. Éstas instrucciones están preparadas para un OSX (bash, zsh). No obastante para windows los comandos son los equivalentes en cmd.
 
-Primero clonamos el repositorio del proyecto:
-
-```console
-git clone https://github.com/ensamblador/chime-transcribe-comprehend-demo.git
-```
 
 <br><br><br>
 
 ## Parte I: Backend Chime Meeting
 
 <br><br>
+
+Primero clonamos el repositorio del proyecto:
+
+```console
+git clone https://github.com/ensamblador/chime-transcribe-comprehend-demo.git
+cd chime-transcribe-comprehend-demo
+```
+
 
 Para el backend debemos contar previamente con un bucket disponible para despliegue, en caso de no estar creado se puede utilizar el comando make bucket:
 
@@ -77,7 +80,6 @@ Utilizamos este bucket en el despligue. Vamos a la carpeta desplegamos el backen
 
 ```console
 aws s3 mb s3://chime-meeting-deploy-bucket
-cd chime-transcribe-comprehend-demo
 sam deploy --stack-name chime-intelligent-meeting-backend-epsilon --s3-bucket chime-meeting-deploy-bucket --capabilities CAPABILITY_IAM --region us-east-1
 ```
 

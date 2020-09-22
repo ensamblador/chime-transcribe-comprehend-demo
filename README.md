@@ -127,6 +127,8 @@ esto le permitirá al usuario realizar una transcripción en streaming (y sólo 
 3. En security credentials haga click en el boton "create access key".
 4. Copie los valores de access_key y secret_key en el archivo  [transcribe_credentials.js](src/transcribe_credentials.js)
 
+![](img/access_key.jpg)
+
 <br><br><br>
 
 ## Despliegue de la Web App
@@ -160,19 +162,33 @@ A continuación puede ejecutar los siguientes comandos que crearán los recursos
 amplify hosting add
 ```
 
-Después de `amplify hosting add` elija `DEV (S3 only with HTTP)` y el nombre del hosting bucket puede ser el propuesto por amplify sin problemas.
+Después de `amplify hosting add` elija ` PROD (S3 with CloudFront using HTTPS)` y el nombre del hosting bucket puede ser el propuesto por amplify sin problemas.
 
+Para actualizar los valores por defecto de la distribución cloudfront actualizamos el hosting. Los navegadores requieren HTTPS para poder entregar acceso a los dispositivos multimedia, la forma más fácil es utilizar el certificado de cloudfront.net, sólo usamos cloudfront para que provea el certificado y la conexión segura HTTPS.
+
+```console
+amplify hosting update
+```
+```
+? hosting bucket name transcribeviewer-20200922014710-hostingbucket
+? Specify the section to configure CloudFront
+? Remove CloudFront from hosting No
+? default object to return from origin index.html
+? Default TTL for the default cache behavior 0
+? Max TTL for the default cache behavior 0
+? Min TTL for the default cache behavior 0
+? Configure Custom Error Responses No
+? Specify the section to configure exit
+```
+Ahora está listo para desplegar el sitio web.
 
 ```console
 yarn install
+amplify publish
 ```
 
 Nota: yarn podría arrojar unos warnings relacionados a "unmet peer dependency" no se preocupe.
 
-
-```console
-amplify publish
-```
 
 **Después de `amplify publish` elija _`no`_ cuando consulta por la generación del código graphql**
 
@@ -180,42 +196,12 @@ amplify publish
 Do you want to generate code for your newly created GraphQL API (Y/n) n
 ```
 
-Una vez que el sitio web se ha publicado en el bucket, podemos agregar cloudfront.Los navegadores requieren HTTPS para poder entregar acceso a los dispositivos multimedia, la forma más fácil es utilizar el certificado de cloudfront.net
-
-```console
-amplify hosting update
-```
-
-```console
-? Specify the section to configure CloudFront
-CloudFront is NOT in the current hosting
-? Add CloudFront to hosting Yes
-? default object to return from origin index.html
-? Default TTL for the default cache behavior 0
-? Max TTL for the default cache behavior 0
-? Min TTL for the default cache behavior 0
-? Configure Custom Error Responses No
-? Specify the section to configure
-  Website
-  CloudFront
-  Publish
-❯ exit
-```
-
-luego de haber configurado la aplicación web con cloudfront, lo actualizamos en la nube.
-```console
-amplify push
-```
-
-Nota: Se podría haber realizado el despliegue del sitio web directamente con cloudfront. En algunos casos esto genera una demora en la actualización del origen (bucket) en la distribución de cloudfront. De esta forma tenemos una actualización inmediata y control sobre el parámetro TTL.
-
-
 Al finalizar el despliegue accedemos al sitio web
 ```console
 Hosting endpoint: https://XXXXXXXXXXX.cloudfront.net
 ```
 
-Nota: Si el link generado de cloudfront le genera un error de permiso web. Quiere decir que la actualización del sitio web aún está en curso. Espere unos minutos y vuelva a intentarlo.
+Nota: Si el link generado de cloudfront le genera un error de permiso web, quiere decir que la actualización del sitio web desde el bucket aún está en curso. Espere unos minutos y vuelva a intentarlo.
 
 <br><br><br>
 

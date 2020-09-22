@@ -1,7 +1,7 @@
 .meeting {
     border:  1px solid cadetblue;
     border-radius: 5px;
-    width: 80%;
+    width: 900px;
     margin:0 auto;
     padding: 20px;
     margin-top: 20px;
@@ -47,7 +47,7 @@ button {
 
 
 #comments-scroll {
-    overflow-x:hidden;
+    overflow-x:scroll;
     overflow-y:visible;
-    height:650px;
+    height:800px;
 }

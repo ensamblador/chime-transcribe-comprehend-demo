@@ -1,0 +1,48 @@
+type Subscription {
+  onCreateMeeting: Meeting @aws_subscribe(mutations: ["createMeeting"])
+  onUpdateMeeting: Meeting @aws_subscribe(mutations: ["updateMeeting"])
+  onDeleteMeeting: Meeting @aws_subscribe(mutations: ["deleteMeeting"])
+  onCreateAtendee: Atendee @aws_subscribe(mutations: ["createAtendee"])
+  onUpdateAtendee: Atendee @aws_subscribe(mutations: ["updateAtendee"])
+  onDeleteAtendee: Atendee @aws_subscribe(mutations: ["deleteAtendee"])
+  onCreateComment: Comment @aws_subscribe(mutations: ["createComment"])
+  onUpdateComment: Comment @aws_subscribe(mutations: ["updateComment"])
+  onDeleteComment: Comment @aws_subscribe(mutations: ["deleteComment"])
+}
+
+
+
+
+
+export const getMeeting = /* GraphQL */ `
+  query GetMeeting($id: ID!) {
+    getMeeting(id: $id) {
+      id
+      meetingChimeId
+      atendees {
+        items {
+          id
+          meetingAlias
+          createdAt
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          content
+          sentiment
+          entities
+          keyPhrases
+          createdAt
+          atendee {
+            id
+            meetingAlias
+          }
+        }
+        nextToken
+      }
+      createdAt
+    }
+  }
+`;

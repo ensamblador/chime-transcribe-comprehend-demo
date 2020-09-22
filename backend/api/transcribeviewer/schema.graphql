@@ -1,0 +1,32 @@
+type Meeting @model (subscriptions: null) {
+  id: String!
+  meetingChimeId: String!
+  atendees: [Atendee] @connection(name: "MeetingAtendees")
+  comments: [Comment] @connection(name: "MeetingComments")
+  createdAt: String
+}
+
+type Atendee @model {
+  id: String!
+  meetingAlias: String!
+  meetings: Meeting @connection(name: "MeetingAtendees")
+  comments: [Comment] @connection(name: "AtendeeComments")
+  createdAt: String
+}
+
+type Comment @model (subscriptions: null) {
+  id: ID!
+  content: String!
+  atendee: Atendee @connection(name: "AtendeeComments")
+  meeting: Meeting @connection(name: "MeetingComments")
+  sentiment: String
+  entities: String
+  keyPhrases: String
+  createdAt: String
+  commentMeetingId: String
+}
+
+type Subscription {
+  onCreateComment(commentMeetingId: String): Comment @aws_subscribe(mutations: ["createComment"])
+  onUpdateComment(commentMeetingId: String): Comment @aws_subscribe(mutations: ["updateComment"])
+}

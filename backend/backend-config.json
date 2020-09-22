@@ -1,0 +1,65 @@
+{
+    "trigger": {
+      "DynamoInsertTrigger": {
+          "service": "Lambda",
+          "providerPlugin": "awscloudformation",
+          "dependsOn": [
+              {
+                  "category": "function",
+                  "resourceName": "appsyncautocomprehendfunction",
+                  "attributes" :[
+                      "Arn",
+                      "LambdaExecutionRole"
+                  ]
+              },
+
+              {
+                "category": "api",
+                "resourceName": "transcribeviewer",
+                "attributes": [
+                    "GraphQLAPIIdOutput"
+                ]
+            }
+          ]
+      }  
+    },
+    "api": {
+        "transcribeviewer": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "authConfig": {
+                    "additionalAuthenticationProviders": [],
+                    "defaultAuthentication": {
+                        "authenticationType": "API_KEY",
+                        "apiKeyConfig": {
+                            "description": "trascribeviewerkey",
+                            "apiKeyExpirationDays": "365"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "hosting": {
+    },
+    "auth": {},
+    "function": {
+        "appsyncautocomprehendfunction": {
+            "service": "Lambda",
+            "providerPlugin": "awscloudformation",
+            "build": true,
+            "dependsOn": [
+                {
+                    "category": "api",
+                    "resourceName": "transcribeviewer",
+                    "attributes": [
+                        "GraphQLAPIIdOutput",
+                        "GraphQLAPIEndpointOutput",
+                        "GraphQLAPIKeyOutput"
+                    ]
+                }
+            ]
+        }
+    }
+}

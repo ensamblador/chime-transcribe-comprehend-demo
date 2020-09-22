@@ -1,0 +1,68 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Trigger de Lambda Function a la Tabla Comments",
+    "Parameters": {
+        "env": {
+            "Type": "String"
+        },
+        "apitranscribeviewerGraphQLAPIIdOutput": {
+            "Type": "String",
+            "Default": "apitranscribeviewerGraphQLAPIIdOutput"
+        },
+        "functionappsyncautocomprehendfunctionArn": {
+            "Type": "String",
+            "Default": "functionappsyncautocomprehendfunctionArn"
+        },
+        "functionappsyncautocomprehendfunctionLambdaExecutionRole": {
+            "Type": "String",
+            "Default": "functionappsyncautocomprehendfunctionLambdaExecutionRole"
+        }
+    },
+    "Resources": {
+        "EventSourceMapping": {
+            "Type": "AWS::Lambda::EventSourceMapping",
+            "Properties": {
+                "EventSourceArn": {
+                    "Fn::ImportValue": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                {
+                                    "Ref": "apitranscribeviewerGraphQLAPIIdOutput"
+                                },
+                                ":GetAtt:CommentTable:StreamArn"
+                            ]
+                        ]
+                    }
+                },
+                "FunctionName": {"Ref": "functionappsyncautocomprehendfunctionArn" 
+                },
+                "StartingPosition": "TRIM_HORIZON"
+            }
+        },
+        "ComprehendPolicy": {
+
+            "Type": "AWS::IAM::Policy",
+            "Properties": {
+                "PolicyName": "comprehend-lambda-execution-policy",
+                "Roles": [
+                    {
+                        "Ref": "functionappsyncautocomprehendfunctionLambdaExecutionRole"
+                    }
+                ],
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Action": [
+                                "comprehend:*"
+                            ],
+                            "Effect": "Allow",
+                            "Resource": "*"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

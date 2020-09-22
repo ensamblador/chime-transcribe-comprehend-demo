@@ -1,0 +1,15 @@
+{
+    "permissions": {
+        "api": {
+            "transcribeviewer": [
+                "read",
+                "update"
+            ]
+        },
+        "hosting": {
+            "S3AndCloudFront": [
+                "read"
+            ]
+        }
+    }
+}

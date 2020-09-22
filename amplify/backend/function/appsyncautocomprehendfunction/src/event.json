@@ -1,0 +1,88 @@
+{
+    "Records": [
+        {
+            "eventID": "b2a3bab77474cfd648e8899c37e40683",
+            "eventName": "INSERT",
+            "eventVersion": "1.1",
+            "eventSource": "aws:dynamodb",
+            "awsRegion": "us-east-1",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1589651207,
+                "Keys": {
+                    "id": {
+                        "S": "270fd62a-ce8a-4c4f-952d-1297d8b3a68f"
+                    }
+                },
+                "NewImage": {
+                    "createdAt": {
+                        "S": "2020-05-16T17:46:47.020Z"
+                    },
+                    "commentMeetingId": {
+                        "S": "d2be49ae-e6d4-4baa-8cfb-0ced32fe525f"
+                    },
+                    "__typename": {
+                        "S": "Comment"
+                    },
+                    "id": {
+                        "S": "270fd62a-ce8a-4c4f-952d-1297d8b3a68f"
+                    },
+                    "commentAtendeeId": {
+                        "S": "5edf6ecd-8f51-4c7c-8df1-1e9d48329f88"
+                    },
+                    "content": {
+                        "S": "Hola este es un nuevo comentario s"
+                    },
+                    "updatedAt": {
+                        "S": "2020-05-16T17:46:47.020Z"
+                    }
+                },
+                "SequenceNumber": "17072300000000018052677772",
+                "SizeBytes": 304,
+                "StreamViewType": "NEW_AND_OLD_IMAGES"
+            },
+            "eventSourceARN": "arn:aws:dynamodb:us-east-1:844626608976:table/Comment-4lrh6gizbvdjpahrk2rum27jzi-dev/stream/2020-05-13T03:15:12.305"
+        },
+        {
+            "eventID": "b2a3bab77474cfd648e8899c37e40683",
+            "eventName": "MODIFY",
+            "eventVersion": "1.1",
+            "eventSource": "aws:dynamodb",
+            "awsRegion": "us-east-1",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1589651207,
+                "Keys": {
+                    "id": {
+                        "S": "270fd62a-ce8a-4c4f-952d-1297d8b3a68f"
+                    }
+                },
+                "NewImage": {
+                    "createdAt": {
+                        "S": "2020-05-16T17:46:47.020Z"
+                    },
+                    "commentMeetingId": {
+                        "S": "d2be49ae-e6d4-4baa-8cfb-0ced32fe525f"
+                    },
+                    "__typename": {
+                        "S": "Comment"
+                    },
+                    "id": {
+                        "S": "270fd62a-ce8a-4c4f-952d-1297d8b3a68f"
+                    },
+                    "commentAtendeeId": {
+                        "S": "5edf6ecd-8f51-4c7c-8df1-1e9d48329f88"
+                    },
+                    "content": {
+                        "S": "hola tinene la pura cagada ellos"
+                    },
+                    "updatedAt": {
+                        "S": "2020-05-16T17:46:47.020Z"
+                    }
+                },
+                "SequenceNumber": "17072300000000018052677772",
+                "SizeBytes": 304,
+                "StreamViewType": "NEW_AND_OLD_IMAGES"
+            },
+            "eventSourceARN": "arn:aws:dynamodb:us-east-1:844626608976:table/Comment-4lrh6gizbvdjpahrk2rum27jzi-dev/stream/2020-05-13T03:15:12.305"
+        }
+    ]
+}

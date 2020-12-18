@@ -240,11 +240,11 @@ Si bien es cierto el demo es simple, se puede extender utilizando la base de dat
 La limpieza basicamente es eliminar los stacks de cada aplicación. Primero el backend (debe reeemplazar el stack name por el que utilizó) 
 
 ```console
-aws cloudformation delete-stack --stack-name chime-intelligent-meeting-backend-epsilon
+aws cloudformation delete-stack --stack-name $STACK_NAME --region $REGION --profile $PROFILE
 ```
 Además, se debe eliminar el bucket para deploy (el nombre de bucket es el que se utilizó en paso I)
 ```console
-aws s3 rb --force s3://chime-meeting-deploy-bucket
+aws s3 rb --force s3://$DEPLOY_BUCKET --profile $PROFILE
 ```
 
 En el proyecto amplify eliminamos los recursos cloud utilizando `amplify delete`
@@ -255,10 +255,10 @@ amplify delete
 Nota: De forma manual se eliminan los buckets utilizados para hosting. Dada la forma de despliegue, no serán borrados cuando se eliminan los recursos ya que no estan vacíos. Si no recordamos los nombres los podemos buscar  (amplify propone nombres que contienen la fecha de creación)
 
 ```console
-aws s3 ls --profile default | grep 20200610
+aws s3 ls --profile default | grep transcribeviewer
 2020-06-10 14:27:38 transcribeviewer-20200610142441-hostingbucket-epsilon
 ```
-Nota: `grep 20200610` busca buckets con ese patrón en el nombre, dependerá de la fecha de creación de esos buckets.
+Nota: `grep transcribeviewer` busca buckets con ese patrón en el nombre, se debe revisar si el bucket es el creado con amplify dependerá de la fecha de creación de esos buckets.
 
 Eliminamos ese bucket
 

@@ -19,11 +19,13 @@ const Meeting = (props) => {
   const [region, setRegion] = useState(defaultRegion)
   const [error, setError] = useState()
   const [meetingId, setMeetingId] = useState({ message: "" })
-
   const [flow, setFlow] = useState("flow-authenticate")
+
+  const [languageCode, setLanguageCode] = useState("es-US")
 
   MC.setEndpoint(props.endpoint)
   MC.setAppSyncClient(props.client)
+  MC.setLanguageCode(languageCode)
   
   MC.setFlow = setFlow
 
@@ -53,6 +55,9 @@ const Meeting = (props) => {
         break
       case "inputRegion":
         setRegion(e.target.value)
+        break
+      case "inputLanguage":
+        setLanguageCode(e.target.value)
         break
       default:
         break

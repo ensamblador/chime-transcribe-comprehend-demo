@@ -1,0 +1,8 @@
+{
+    "CreateAPIKey": 1,
+    "AppSyncApiName": "transcribeviewer",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "S3DeploymentBucket": "amplify-transcribeviewer-dev-140506-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/f6cd2cf24a2d654b3a24ab5c610726834e800501"
+}

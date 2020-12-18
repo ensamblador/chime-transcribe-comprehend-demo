@@ -9,7 +9,7 @@ import transcribe_credentials from '../../transcribe_credentials';
 
 
 export default class MicRecorder {
-    constructor() {
+    constructor(languageCode) {
 
         this.supported = false
         this.stream = null
@@ -45,7 +45,10 @@ export default class MicRecorder {
         } else {
             console.log('getUserMedia not supported on your browser!')
         }
+    }
 
+    setLanguageCode = (languageCode) => {
+        this.languageCode =languageCode
     }
 
     init = async () => {
@@ -89,7 +92,7 @@ export default class MicRecorder {
                 if (!results[0].IsPartial) {
                     this.transcription += transcript + "\n"
                     console.log(this.transcription)
-                    this.logger.createComment(this.transcription)
+                    this.logger.createComment(this.transcription, this.languageCode)
                     this.transcription =''
                 }
             }

@@ -28,6 +28,7 @@ class MeetingLogs {
         })
     }
     subscribeToUpdatedMessages = (client, aMeetingId, newDataCallback, errorCallback) => {
+
         this.client = client
         this.subscription = this.client.subscribe({
             query: ON_UPDATE_COMMENT,
@@ -58,17 +59,20 @@ export const Meeting = (props) => {
     useEffect(() => {
 
         const processNewMessage = msg => {
-            console.log('subdata >>>>> ', msg, `Aux Messages >>>>>`, _messages)
+            //console.log('subdata >>>>> ', msg, `Aux Messages >>>>>`, _messages)
             _messages.push(msg.data.onCreateComment)
             setMessages(_messages.map(i => i))
         }
 
         const processUpdatedMessage = msg => {
-            console.log('subdata >>>>> ', msg, `Aux Messages >>>>>`, _messages)
+            //console.log('subdata >>>>> ', msg, `Aux Messages >>>>>`, _messages)
 
             let new_comment = msg.data.onUpdateComment
             _messages = _messages.map(elem => {
-                if (elem.id === new_comment.id) return new_comment
+                if (elem.id === new_comment.id) {
+                    console.log(new_comment)
+                    return new_comment
+                }
                 else return elem
             })
 
@@ -210,8 +214,14 @@ const Comment = ({ msg }) => {
                 <Alert variant="light">
                     <strong>{msg.atendee.meetingAlias}</strong>   <Sentiment sen={msg.sentiment} />
                     <em>{createdAt.toLocaleDateString() + ' ' + createdAt.toLocaleTimeString()}</em>
-                    <hr />
-                    {msg.content}
+                    <Row className='original'>
+                    [Orig] {msg.content}
+                    </Row>
+                    <Row className='translated'>
+                    [Tran] {msg.translation}
+                    </Row>
+                    
+                    
                 </Alert>
 
             </Col>

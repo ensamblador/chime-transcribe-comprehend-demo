@@ -32,6 +32,21 @@ button {
     float: right;
 }
 
+.original {
+    padding-left :10px;
+    padding-top: 5px;
+
+    text-align :justify;
+}
+
+
+.translated {
+    padding-left :10px;
+    padding-top: 5px;
+    font-weight:bold;
+    text-align :justify;
+    font-style: italic;
+}
 
 
 .entities span.badge {

@@ -1,0 +1,294 @@
+type Meeting {
+  id: String!
+  meetingChimeId: String!
+  atendees(filter: ModelAtendeeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelAtendeeConnection
+  comments(filter: ModelCommentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCommentConnection
+  createdAt: String
+  updatedAt: AWSDateTime!
+}
+
+type Atendee {
+  id: String!
+  meetingAlias: String!
+  meetings: Meeting
+  comments(filter: ModelCommentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCommentConnection
+  createdAt: String
+  updatedAt: AWSDateTime!
+}
+
+type Comment {
+  id: ID!
+  content: String!
+  atendee: Atendee
+  meeting: Meeting
+  sentiment: String
+  entities: String
+  keyPhrases: String
+  createdAt: String
+  language: String
+  translation: String
+  commentMeetingId: String
+  updatedAt: AWSDateTime!
+}
+
+type Subscription {
+  onCreateComment(commentMeetingId: String): Comment @aws_subscribe(mutations: ["createComment"])
+  onUpdateComment(commentMeetingId: String): Comment @aws_subscribe(mutations: ["updateComment"])
+  onCreateAtendee: Atendee @aws_subscribe(mutations: ["createAtendee"])
+  onUpdateAtendee: Atendee @aws_subscribe(mutations: ["updateAtendee"])
+  onDeleteAtendee: Atendee @aws_subscribe(mutations: ["deleteAtendee"])
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelMeetingConnection {
+  items: [Meeting]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelMeetingFilterInput {
+  id: ModelStringInput
+  meetingChimeId: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelMeetingFilterInput]
+  or: [ModelMeetingFilterInput]
+  not: ModelMeetingFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+type Query {
+  getMeeting(id: ID!): Meeting
+  listMeetings(filter: ModelMeetingFilterInput, limit: Int, nextToken: String): ModelMeetingConnection
+  getAtendee(id: ID!): Atendee
+  listAtendees(filter: ModelAtendeeFilterInput, limit: Int, nextToken: String): ModelAtendeeConnection
+  getComment(id: ID!): Comment
+  listComments(filter: ModelCommentFilterInput, limit: Int, nextToken: String): ModelCommentConnection
+}
+
+input CreateMeetingInput {
+  id: String!
+  meetingChimeId: String!
+  createdAt: String
+}
+
+input UpdateMeetingInput {
+  id: String!
+  meetingChimeId: String
+  createdAt: String
+}
+
+input DeleteMeetingInput {
+  id: ID
+}
+
+type Mutation {
+  createMeeting(input: CreateMeetingInput!, condition: ModelMeetingConditionInput): Meeting
+  updateMeeting(input: UpdateMeetingInput!, condition: ModelMeetingConditionInput): Meeting
+  deleteMeeting(input: DeleteMeetingInput!, condition: ModelMeetingConditionInput): Meeting
+  createAtendee(input: CreateAtendeeInput!, condition: ModelAtendeeConditionInput): Atendee
+  updateAtendee(input: UpdateAtendeeInput!, condition: ModelAtendeeConditionInput): Atendee
+  deleteAtendee(input: DeleteAtendeeInput!, condition: ModelAtendeeConditionInput): Atendee
+  createComment(input: CreateCommentInput!, condition: ModelCommentConditionInput): Comment
+  updateComment(input: UpdateCommentInput!, condition: ModelCommentConditionInput): Comment
+  deleteComment(input: DeleteCommentInput!, condition: ModelCommentConditionInput): Comment
+}
+
+input ModelMeetingConditionInput {
+  meetingChimeId: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelMeetingConditionInput]
+  or: [ModelMeetingConditionInput]
+  not: ModelMeetingConditionInput
+}
+
+type ModelAtendeeConnection {
+  items: [Atendee]
+  nextToken: String
+}
+
+input ModelAtendeeFilterInput {
+  id: ModelStringInput
+  meetingAlias: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelAtendeeFilterInput]
+  or: [ModelAtendeeFilterInput]
+  not: ModelAtendeeFilterInput
+}
+
+input CreateAtendeeInput {
+  id: String!
+  meetingAlias: String!
+  createdAt: String
+  atendeeMeetingsId: ID
+}
+
+input UpdateAtendeeInput {
+  id: String!
+  meetingAlias: String
+  createdAt: String
+  atendeeMeetingsId: ID
+}
+
+input DeleteAtendeeInput {
+  id: ID
+}
+
+input ModelAtendeeConditionInput {
+  meetingAlias: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelAtendeeConditionInput]
+  or: [ModelAtendeeConditionInput]
+  not: ModelAtendeeConditionInput
+}
+
+type ModelCommentConnection {
+  items: [Comment]
+  nextToken: String
+}
+
+input ModelCommentFilterInput {
+  id: ModelIDInput
+  content: ModelStringInput
+  sentiment: ModelStringInput
+  entities: ModelStringInput
+  keyPhrases: ModelStringInput
+  createdAt: ModelStringInput
+  language: ModelStringInput
+  translation: ModelStringInput
+  commentMeetingId: ModelStringInput
+  and: [ModelCommentFilterInput]
+  or: [ModelCommentFilterInput]
+  not: ModelCommentFilterInput
+}
+
+input CreateCommentInput {
+  id: ID
+  content: String!
+  sentiment: String
+  entities: String
+  keyPhrases: String
+  createdAt: String
+  language: String
+  translation: String
+  commentMeetingId: String
+  commentAtendeeId: ID
+}
+
+input UpdateCommentInput {
+  id: ID!
+  content: String
+  sentiment: String
+  entities: String
+  keyPhrases: String
+  createdAt: String
+  language: String
+  translation: String
+  commentMeetingId: String
+  commentAtendeeId: ID
+}
+
+input DeleteCommentInput {
+  id: ID
+}
+
+input ModelCommentConditionInput {
+  content: ModelStringInput
+  sentiment: ModelStringInput
+  entities: ModelStringInput
+  keyPhrases: ModelStringInput
+  createdAt: ModelStringInput
+  language: ModelStringInput
+  translation: ModelStringInput
+  commentMeetingId: ModelStringInput
+  and: [ModelCommentConditionInput]
+  or: [ModelCommentConditionInput]
+  not: ModelCommentConditionInput
+}

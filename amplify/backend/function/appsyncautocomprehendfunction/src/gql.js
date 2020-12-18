@@ -13,6 +13,8 @@ module.exports = {
       sentiment
       entities
       keyPhrases
+      language
+      translation
       createdAt
       commentMeetingId
   }

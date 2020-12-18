@@ -25,6 +25,8 @@ const endpoint = new urlParse(appsyncUrl).hostname.toString()
 
 const { UpdateComment, ListMeetings } = require("./gql.js");
 var comprehend = new AWS.Comprehend({ region: region });
+var translate = new AWS.Translate({ region: region });
+
 
 const req = new AWS.HttpRequest(appsyncUrl, region);
 
@@ -45,14 +47,32 @@ exports.handler = (event) => {
     const resultados = [];
     if (insertedRecords.length) {
         // TODO: foreach
+
+
         insertedRecords.forEach(async element => {
-            // console.log(element.dynamodb.NewImage)
+            
+            console.log(JSON.stringify(element))
 
             var params = {
-                LanguageCode: 'es',
+                LanguageCode: element.dynamodb.NewImage.language.S.split('-')[0],
                 Text: element.dynamodb.NewImage.content.S
-            };
-            
+            }
+
+            var targetLanguageCode = 'en'
+            if (params.LanguageCode == 'en') {
+                targetLanguageCode = 'es'
+            }
+            var translateParams = {
+                SourceLanguageCode: params.LanguageCode, /* required */
+                TargetLanguageCode: targetLanguageCode, /* required */
+                Text: params.Text
+              }
+
+
+            var translation = await new Promise((resolve, reject) => {
+                translate.translateText(translateParams).promise().then(data => resolve(data)).catch(err => console.log(err))
+            })
+
             var keyphrases = await new Promise((resolve, reject) => {
                 comprehend.detectKeyPhrases(params).promise().then(data => resolve(data)).catch(err => console.log(err))
             })
@@ -85,7 +105,8 @@ exports.handler = (event) => {
                         id: element.dynamodb.Keys.id.S,
                         entities: JSON.stringify(entities.Entities),
                         keyPhrases: JSON.stringify(keyphrases.KeyPhrases),
-                        sentiment: sentiment.Sentiment
+                        sentiment: sentiment.Sentiment,
+                        translation: translation.TranslatedText
                     },
                 },
             })

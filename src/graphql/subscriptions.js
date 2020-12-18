@@ -34,6 +34,8 @@ export const onCreateComment = /* GraphQL */ `
       entities
       keyPhrases
       createdAt
+      translation
+      language
       commentMeetingId
     }
   }
@@ -71,6 +73,8 @@ export const onUpdateComment = /* GraphQL */ `
       entities
       keyPhrases
       createdAt
+      translation
+      language
       commentMeetingId
     }
   }

@@ -33,7 +33,7 @@ export default class Logger {
         this.AttendeeId = Atendee.AttendeeId
         this.createMeeting(Meeting)
         this.createAttendee(Atendee)
-        this.createComment('[Join]')
+        this.createComment('[Join]', 'en-US')
 
     }
     leave = () => {
@@ -79,14 +79,15 @@ export default class Logger {
         })
     }
 
-    createComment = (comment) => {
+    createComment = (comment, languageCode='en-US') => {
         this.client.mutate({
             mutation: CREATE_COMMENT,
             variables: {
                 input: {
                     commentAtendeeId: this.AttendeeId,
                     commentMeetingId: this.MeetingId,
-                    content: comment
+                    content: comment,
+                    language: languageCode
                 }
             }
         }).then(({ data: { createComment } }) => {

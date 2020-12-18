@@ -2,9 +2,10 @@
 
 # dependencies
 node_modules/*
-
+.vscode
 /.pnp
 .pnp.js
+latest-build.zip
 
 # testing
 /coverage
@@ -32,12 +33,13 @@ amplify/backend/awscloudformation
 build/*
 dist/*
 aws-exports.js
+transcribe_credentials.js
+chime-api-url.js
+
 awsconfiguration.json
 amplifyconfiguration.json
 amplify-gradle-config.json
 amplifyxc.config%
 
 !aws-sdk/*
-
-
 

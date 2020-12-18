@@ -72,6 +72,21 @@ const StartMeeting =  (props) =>
             </select>
           </div>
           <div className="row mt-3">
+            <label htmlFor="inputLanguage" className="sr-only">
+              Language Code
+            </label>
+            <select
+              id="inputLanguage"
+              onChange={props.inputChange}
+              defaultValue="es-US"
+              className="custom-select"
+              style={{ width: "100%" }}
+            >
+              <option value="es-US">Español</option>
+              <option value="en-US">inglés</option>
+            </select>
+          </div>
+          <div className="row mt-3">
             <button
               id="authenticate"
               className="btn btn-lg btn-primary btn-block"

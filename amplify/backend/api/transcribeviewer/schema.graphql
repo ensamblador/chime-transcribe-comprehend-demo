@@ -23,6 +23,8 @@ type Comment @model (subscriptions: null) {
   entities: String
   keyPhrases: String
   createdAt: String
+  language: String
+  translation: String
   commentMeetingId: String
 }
 

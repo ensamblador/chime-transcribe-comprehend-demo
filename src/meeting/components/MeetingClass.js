@@ -83,13 +83,21 @@ export default class MeetingClass {
         this.analyserNodeCallback = () => { }
         this.tileOrganizer = new DemoTileOrganizer();
         this.recorder = new MicRecorder()
-        this.logger  = new Logger()
+        this.logger = new Logger()
     }
 
     log = (str) => { console.log(`[DEMO] ${str}`) }
 
     setEndpoint = (endpoint) => {
+
         this.endpoint = endpoint
+    }
+
+    setLanguageCode = (languageCode) => {
+        if ('recorder' in this) {
+            console.log(this)
+            this.recorder.setLanguageCode(languageCode)
+        }
     }
 
     setAppSyncClient = (client) => {
